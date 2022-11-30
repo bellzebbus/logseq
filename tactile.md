@@ -1,0 +1,26 @@
+- [[NeoVIm]]
+	- TODO Descargar
+	- TODO configurar
+	- TODO sincronizar con el debian wsl
+-
+- Terminal
+	- DONE Buscar una consola de pana
+	- TODO zsh
+	- TODO descargar PowerLevel10k
+	- TODO buscar tema bonito
+-
+- Audio
+	- LATER como xuxa conecto los audifonos por blutu
+	- buscar un mixer mas intuitivo
+-
+- wifi
+	- DONE buscar un network manager para que deje de estar conectado a la fe de jesucristo
+-
+- Logseq
+	- TODO descargar logseq
+	- TODO sincronizar repositorio de github con el MAIN
+-
+- qtile
+	- TODO instalar Qtile
+-
+-

@@ -1,0 +1,157 @@
+public:: true
+
+-
+- la estructura de una red empresaria debe dividirse en 3 capas con el fin de poder optimizar la banda ancha de una red empresarial. estas capas son
+  collapsed:: true
+	- [[capa de acceso]]
+	- [[capa de distribucion]]
+	- [[capa de nucleo]]
+-
+- cada capa tiene su propia funcion y utilidad especifica
+  collapsed:: true
+	- la capa de acceso proporciona conectividad a los usuarios
+	- la capa de distribucion se utiliza para el envio de trafico de una red local a otra
+	- la capa de nucleo representa una capa troncal de alta velocidad entre redes dispersas
+	- el trafico de los usuarios se inicia en la capa de acceso y pasa por las demas capas solo si se necesita utilizar las funcionalidades de esas capas
+- en algunos casos, sobretodo en empresas pequeñas en redes gerarquicas puede que hayan 2 capas solamente, la capa de nucelo y la capa de distribucion se combinan en una sola, lo que reduce el costo y la complegidad
+-
+- ## arquitectura empresarial de cisco
+- Cisco divide las redes empresariales en componentes funcionales, al mismo tiempo que da mantenimiento a las 3 capas
+- la arquitectura empresarial de cisco incluye los siguientes modulos
+  collapsed:: true
+	- [[campus empresarial]]
+	  collapsed:: true
+		- el campus empresarial es un modulo compuesto por la capa de acceso, la capa de distribucion y la capa de nucleo
+		- el modulo de capa de acceso incluye switches de capa 2 o de capa 3 para proporcionar la densidad de puertos requerida
+		- en este modulo se implementan las [[vlan]] y los enlaces troncales a la capa de distribucion
+		- la [[redundancia]] es importante en la capa de acceso
+		- el modulo de capa de distribucion agrega acceso al edificio mediante switches de capa 3
+		- en la capa de distribucion se hace el routing, el control de acceso y la QoS
+		- la capa de nucleo interconecta con alta velocidad a la capa de distribucion, las granjas de servidores y el perimetro empresarial
+		- redundancia, convergencia rapida y tolerancia a fallas
+		- ademas de esto el campus empresarial puede contener los siguientes submodulos
+			- modulo de centro de datos y granja de servidores
+				- este area tiene conectividad de alta velocidad para conectar los servidores
+				- muy segura, mucha redundancia, tolerancia a fallos
+				- los sistemas de administracion de red controlan el rendimiento mediante el monitoreo de la disponibilidad de dispositivos  y la red
+			- modulo de servicios
+				- este area proporciona acceso a los servicios, como por ejemplo telefonia, ip, wifi, ubicacion, etc
+	- [[perimetro empresarial]]
+	  collapsed:: true
+		- este modulo esta compuesto por los modulos de internter, VPN y WAN que conectan a la empresa al proveedor de servicios
+		- en este modulo extiende los servicios de la empresa a  los sitios remotos
+		- permite a la empresa usar recursos de internet y de sus socios
+		- proporciona QoS, refuerzo de politicas, niveles de servicio y seguridad
+	- [[perimetro del proveedor de servicios]]
+	  collapsed:: true
+		- este modulo es el que proporciona servicios de internet, de red telefonica conmutada (PSTN) y wan
+		- el [[modelo de red compuesta]] (ECNM) pasa a traves de un dispositivo de extremo
+		- aqui se analizan los paquetes y se decide si entran o no en la red empresarial
+		- los IDS sistemas de deteccion de intrusiones y los IPS sistema de prevencion de intrusiones tambien se pueden configurar en el perimetro empresarial para otorgar mas proteccion
+	- [[remoto]]
+	  collapsed:: true
+		- no se xD
+- ![image.png](../assets/image_1669252956140_0.png)
+- ## Dominios de fallas
+- una red bien diseñada no solo controla el trafico, sino que ademas limita el tamaño de los [[dominio de falla]]
+- un dominio de falla es el area de la red que se ve afectada cuando un dispositivo o un servicio de red esenciales experimentan un problema
+- la funcion en la gerarquia del dispositivo que falla es lo que determina el impacto del dominio de fallas, no es lo mismo que falle un switch que otorga conexion a 3 PCs que el router que esta uniendo 2 segmentos
+- la redundancia y los equipos de alta tecnologai minimizan la probabilidad de generar fallos e interrupciones en la red.
+- si los dominio de falla son mas pequeños aumenta la produccion de la empresa y simplifica la resolucion de problemas.
+- #### limitacion de dominio de falla
+  collapsed:: true
+	- esto es algo que el diseñador debe tener muy en cuenta al momento de diseñar la red
+	- puede aumentar el costo
+	- en una red gerarquica es mucho mas facil y economico sobretodo si se hace en la capa de distribucion
+- #### implementacion de un bloque de switches
+  collapsed:: true
+	- los routers o switches multicapa generalmente se implementan por pares
+	- los switches de capa de acceso se dividen en partes iguales entre ellos
+	- a esta configuracion se le denomina bloque de switches de edificio o de departamento
+	- cada bloque de switches funciona de manera independiente esto es porque si un dispositivo falla no afecta a la red y la falla de un bloque afecta a un numero bajo de usuarios finales
+-
+- ## identificar los modulos de la arquitectura empresarial de cisco
+- ![image.png](../assets/image_1669256090979_0.png)
+-
+- ## Diseño que admita la escalabilidad
+- Recomendaciones para crear una red escalable de forma facil y eficaz
+  collapsed:: true
+	- equipo modular extensible o de dispositivos agrupados que puedan actualizarse facilmente. algunos dispositivos les puedes poner tarjetas para añadir tecnologia o funcionalidades, ademas algunos dispositivos se pueden anidar en cluster para que funcionen como uno solo, asi simplificamos la administracion y la configuracion
+	- diseñar una red jerarquica que incluya modulos que se puedan agregar, actualizar y modificar segun lo que sea necesario sin afectar al resto de la red. por ejemplo independizar la capa de acceso para que se pueda expandir sin afectar a la capa de distribucion y la capa de nucleo del campus empresarial
+	- configurar ipv4 o ipv6 de manera jerarquica, si se hace bien no tendremos que redireccionar cada vez que extendamos la red
+	- usar switches y routers multicapa para limitar la difucion y filtrar otro tipo de trafico no deseado de la red. utilizar dispositivos de capa 3 para filtrar y reducir el trafico al nucleo de la red
+- como se muesta en la ilustracion, los requisitos de diseño de red mas avanzados incluyen
+  collapsed:: true
+	- enlaces que generen [[redundancia]] entre los dispositivos esenciales y los dispositivos de capa de acceso y de la capa de nucleo
+	- implementacion de varios enlaces entre los equipos, ya sea con mas cables de red ( [[EtherChannel]] ) o con balanceo de carga de mismo costo para aumentar el ancho de banda. esto aumenta el ancho de banda disponible. las implementaciones por EtherChannel se pueden usar cuando el presupuesto no de para interfaces de alta velocidad o fibra optica
+	- la implementacion de la conectividad inalambrica para permitir movilidad y expansion
+	- el uso de protocolo de routing escalable y la implementacion de caracteristicas dentro de ese protocolo para aislar las actualizaciones de routing y minimizar el tamaño de la tabla de routing
+	-
+- ![image.png](../assets/image_1669257061981_0.png)
+-
+-
+- ## planificacion para la [[redundancia]]
+	- ### implementacion de la redundancia
+	  collapsed:: true
+		- la redundancia se refiere a multiplicar los enlaces de las servicios esenciales para asegurar su disponibilidad, en otras palabras, tener mas pistas por si una se cae
+		- una forma de implementar la redundancia es instalar equipos duplicados y proporcionar servicios de conmutacion por falla para los dispositivos esenciales
+		- otro metodo de implementar redundancia es mediante rutas redundantes, como se muestra en la siguiente ilustracion. las rutas redundantes ofrecen rutas fisicas alternativas para los datos se muevan a traves de la red.
+		  collapsed:: true
+			- en una [[red conmutada]] las rutas redundantes admiten una alta disponibilidad
+			- por el funcionamiente de los switches es posible que las rutas redundantes en una red ethernet conmutada causen bucles logicos en la capa 2 por esto se necesita un protocolo de arbol de expansion ([[stp]])
+			- el protocolo stp permite la redundancia necesaria para proporcionar confiabilidad, pero elimina bucles de switching.
+			- el protoclo stp nos permite pausar rutas redundantes en una red conmutada hasta que son necesarias, osea hasta que ocurre una falla
+			- stp es un protocolo de estandares abiertos que se utiliza en un entorno de conmutacion para crear una topologia logica sin bucles
+			-
+- ![image.png](../assets/image_1669390505894_0.png)
+-
+- ## aumento del ancho de banda ( [[EtherChannel]] )
+- ### implementacion de [[EtherChannel]]
+	- aveces es necesario que por un enlace pase mayor cantidad trafico que otros, si tenemos muchos enlaces que convergen en un solo punto es muy probable que se genere un cuello de botella.
+	- la agregacion de enlaces permite que el administrador aumente el ancho de banda entre los dispositivos mediante la creacion de un enlace logico compuesto de varios enlaces fisicos. como se muestra en la ilustracion, [[EtherChannel]] es una forma de agregacion de enlaces que se utiliza en las redes conmutadas
+	- [[EtherChannel]] utiliza los puertos de switch existentes, por lo tanto no es necesario gastar mas dinero
+	- el enlace [[EtherChannel]] se ve como un enlace logico que utiliza una interfaz EtherChannel
+	- la mayoria de las tareas de configuracion se realizan en la interfaz EtheChannel en lugar de en cada puerto individual, lo que asegura coherencia de configuracion en todos los enlaces.
+	- la configuracion de EtherChannel aprobecha el balanceo de carga entre los enlaces que forman parte del mismo EtherChannel y segun la plataforma de hardware se pueden implementar uno o mas metodos de balanceo de carga
+	-
+- ![image.png](../assets/image_1669393048896_0.png)
+-
+- ## Expansion de la capa de acceso
+- ### implementacion de la conectividad inalambrica
+- la red debe diseñarse para poder expandir el acceso a la red para los usuarios y los dispositivos, segun lo requieran. para extender la conectividad de la capa de acceso, cada vez es mas importante la conectividad inalambrica
+- la implementacion de conectividad inalambrica nos otorga muchas ventajas
+	- aumento de flexibilidad
+	- reduccion de costos
+	- capacidad de crecer y adaptarse a los requisitos cambiantes de las redes y las empresas
+- para la conexion inalambrica los terminales necesitan una NIC inalambrica la cual debe tener un transmisor o un receptor de radio y el controlador de software necesario para que funcione
+- como se muestra en la ilustracion, tambien se necesita un router inalambrico o un punto de acceso inalambrico para que los usuarios puedan conectarse
+- existen varias cosas a tener en cuenta para implementar una red inalambrica
+	- los tipos de dispositivos inalambricos que se debe utilizar
+	- los requisitos de cobertura inalambrica
+	- interferencia
+	- seguridad
+- ![image.png](../assets/image_1669394262360_0.png)
+-
+- ## ajustes de los protocolos de routing
+- los ISP y las redes empresariales generalmente utilizan protocolos mas avanzados, como los protocolos de estado de enlace, debido a su diseño jerarquico y a la capacidad de escalamiento de redes mas grandes
+- los [[protocolos de routing]] de estado de enlace como el protocolo [[ospf]] (open shortest path first) que se muesta en la figura 1, funciona muy bien en redes jerarquicas grandes porque es importante tener una convergencia muy rapida.
+- los routers [[ospf]] establecen y mantienen las adyacencias de vecinos, con otros routers ospf conectados
+- cuando los routers inician una adyacencia intercambian actualizaciones de [[link-state]]  de los routers conectados, la adyacencia plena se se alcanza al sincronizar las vistas de sus bases de datos de link-state.
+- con ospf se envian actualizaciones de link-state cada vez que hay cambios en la red.
+- [[ospf]] es un protocolo de routing de estado de enlace popular y muy versatil
+- [[ospf]] admite diseño jerarquico de 2 capas o ospf multiarea (figura 2)
+- todas las redes ospf comienzan en el area 0, llamada tambien [[area de red troncal]]
+- se pueden cear otras areas a medida que se expande la red, tambien se pueden crear otras areas que no sean area de red troncal
+- todas las demas areas que no sean area de red troncal deben conectarse directamente al area 0
+- otro protocolo de routing popular es el protocolo de routing de gateway interior mejorado ([[EIGRP]])
+- cisco desarrollo [[EIGRP]] como un protocolo de routing vector distancia exclusivo con capacidades mejoradas
+- EIGRP es facil de configurar pero tambien muy proderoso y solido
+- EIGRP utiliza varias tablas (figura 4) y muchas funciones que no tiene ningun otro protocolo de routing
+- es una opcion perfecta para redes grandes de protocolos multiples como las que utilizan principalmente dispositivos cisco
+- ![image.png](../assets/image_1669663544654_0.png)
+- ![image.png](../assets/image_1669663558931_0.png)
+- ![image.png](../assets/image_1669663587554_0.png)
+-
+-
+-
+-

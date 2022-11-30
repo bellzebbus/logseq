@@ -1,0 +1,33 @@
+- ## Redundancia de LAN Introduccion
+- la redundancia se refiere a multiplicar los enlaces de las servicios esenciales para asegurar su disponibilidad, en otras palabras, tener mas pistas por si una se cae
+- ademas de esto al tener una red con redundancia bien diseñada pordemos usar los enlaces dredundantes para compartir la carga de trafico y aumentar la capacidad
+- se deben administrar varias rutas para que no se produzcan bucles en la capa 2. se elijen las mejores rutas y se cuenta con una alternativa de inmediato en caso de falle una ruta principal. los protocolos de arbol de expansion se utilizan para administrar la redundancia de capa 2
+- los dispositivos redundantes como los routers o switches multicapa porporcionan la capacidad de que un cliente utilice un gateway alternativo en caso de que falle el gateway predererminado principal
+- los protocolos de redundancia de primer salto se utilizan para administrar en la que se asigna un gateway predeterminado a un cliente y permitir el uso de un gateway predeterminado alternativo en caso de que falle el principal
+	- en este caso se analizan los protocolos utilizados para la administrar esas formas de redundancia.
+	- se abarcan algunos problemas de redundancia y sus sintomas
+-
+- ## Redundancia en las capas 1 y 2 del modelo OSI
+- el diseño de redes jerarquicas de tres niveles, que utiliza las [[capa de nucleo]], [[capa de distribucion]] y [[capa de acceso]] con redundancia intenta eliminar un unico fallo en la red
+- al conectar varias rutas entre varios switches proporcionamos redundancia fisica a la red
+- para un correcto funcionamiento de la redundancia no solo basta con con utilizar protocolos de capa 2 del modelo osi como [[stp]]
+- lo normal es que se generen bucles fisicos, es el comportamiento normal de los switches, por eso se usa un protocolo de arbol expandido en los switches
+- ##  Problemas con la redundancia de capa 1
+- ### tormenta de difusion
+	- esto se produce cuando existen tantas tramas de difucion bucle de capa 2 que se consume todo el ancho de banda disponible
+	- como consecuencia no se puede enviar nada por esa red
+	- es inebitable en una red con bucles
+-
+- ### transmisiones de multiples tramas
+	- las tramas unicast tambien son afectadas por los bucles, las tramas de unicast enviadas a una red con bucles pueden generar tramas duplicadas que llegan al dispositivo de destino
+	- se arregla implementando un arbol expandido
+-
+- ## Algoritmo de arbol de expancion: funciones de puertos
+- la version 802.1D de stp utiliza el algoritmo de arbol expandido ([[sta]]) para determinar que puertos de switch de una red se dben colocar en estado de bloqueo y envitar que ocurran bucles
+-
+- el [[sta]] designa un nuevo switch como puente raiz y lo utiliza como punto de referencia para todos los calculos de rutas, en la ilustracion, el puente raiz (switch 1) se elige mediante un proceso de eleccion. todos los switches que comparten stp intercambian tramas de BPDU para determinar el switch que posee el menor ID de puente (BID )  en la red. el switch con el menor BID se transforma en el puente raiz en forma automatica segun los calculos del sta
+-
+-
+-
+-
+-
